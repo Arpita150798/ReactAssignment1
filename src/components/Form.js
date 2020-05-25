@@ -25,8 +25,11 @@ class Form extends Component {
         
     }
     handleFormSubmission = (event) => {
+        if(!this.props.isEditForm){
+            this.state.count += 1;
+        }
         this.state.products = [];
-        this.state.count += 1;
+        //
         this.state.products.push({ProductID:this.state.count, ProductName:this.state.ProductName, Catagory: this.state.Catagory, 
             Description: this.state.Description, Price: this.state.Price})
             this.setState({
@@ -40,11 +43,12 @@ class Form extends Component {
     }
     editFormData = (editProduct) =>{
         this.setState({
+            count: editProduct.ProductID,
             ProductName: editProduct.ProductName,
             Description: editProduct.Description,
             Price: editProduct.Price,
             Catagory: editProduct.Catagory,
-        })
+        });
     }
     render() {
         return (

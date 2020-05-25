@@ -13,24 +13,39 @@ class FormResult extends Component {
                 Description:'Maths Books for 12th',
                 Price: 345
             }],
+            isEditForm: false
         }
     }
     handleFormSubmission  = (Products) => {
         this.setState({
-            productList: [...this.state.productList, ...Products]
-        }); 
-         
+            isEditForm : false
+        });
+        let itemIndex = this.state.productList.findIndex((item => item.ProductID === Products[0].ProductID));
+        if(itemIndex === -1) {
+            this.setState({
+                productList: [...this.state.productList, ...Products]
+            });
+        }
+        else{
+            this.state.productList[itemIndex] = Products[0];
+            this.setState({
+                productList: [...this.state.productList]
+            });
+        }   
     }
 
     editFromData = (editProduct) =>{
-        alert(editProduct.ProductName);
+        //alert(editProduct.ProductName);
+        this.setState({
+            isEditForm : true
+        });
         this.editRef.current.editFormData(editProduct);
     }
     
     render() {
         return (
             <React.Fragment>
-                 <Form onFormSubmission={this.handleFormSubmission} ref={this.editRef}></Form> 
+                 <Form onFormSubmission={this.handleFormSubmission} ref={this.editRef} isEditForm={this.state.isEditForm}></Form> 
                <table style={{border: "solid 1px" , margin:"50px"}} >
                    <tbody >
                        <tr className="form-control">
